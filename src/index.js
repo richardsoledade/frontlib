@@ -8,6 +8,9 @@ import LivrosCadastro from './LivrosCadastro';
 import ClienteCadastro from './ClienteCadastro';
 
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import ClienteHst from './ClienteHistorico';
+import FaturamentoLivros from './Faturamento';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,6 +26,9 @@ root.render(
 
         <Route key="cliente" path= "/cliente" element={<ClienteCadastro/>}/>
        
+        <Route key="histórico" path= "/hst" element={<ClienteHst/>}/>
+
+        <Route key="histórico" path= "/faturamento" element={<FaturamentoLivros/>}/>
 
     
       </Routes>

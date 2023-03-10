@@ -12,7 +12,6 @@ function ClienteCadastro() {
   const [cpf, setCpf] = useState([]);
 
   async function cadastrarCliente() {
-    console.log({ nome: clienteNome, cpf: cpf });
     await api
       .post("/cliente", {
         nome: clienteNome,

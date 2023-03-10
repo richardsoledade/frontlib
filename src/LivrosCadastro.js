@@ -12,7 +12,6 @@ function LivrosCadastro() {
   const [vDiaria, setVDiaria] = useState([]);
 
   async function cadastrarLivro() {
-    console.log({ nome: livroNome, vDiaria: vDiaria });
     await api
       .post("/livros", {
         nome: livroNome,

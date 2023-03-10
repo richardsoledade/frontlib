@@ -26,19 +26,27 @@ function App() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //============================================================
   // Cadastro via modal
+  async function toggleLivroIsAlugado(idLivro) {
+    await api.put(`/livros/${idLivro}`).then((r) => {
+      getAluguels();
+    })
+  }
+    //============================================================  
   async function cadastrarAluguel() {
-    console.log({ clienteId: clienteId, livroId: livroId });
     await api
       .post("/aluguel", {
         clienteId: parseInt(clienteId),
         livroId: parseInt(livroId),
       })
       .then((response) => {
-        getAluguels();
+        toggleLivroIsAlugado(livroId)
       });
     setShow(false);
   }
+
+  //============================================================
   // state alguel
   const [aluguels, setAlguels] = useState([]);
 
@@ -53,6 +61,29 @@ function App() {
       });
   }
 
+  //============================================================
+  //Put function
+  const [attAluguel, setAttAluguel] = useState([]);
+
+  async function putAluguel(id, dataRetirada, valorDiaria, livroId) {
+    await api
+      .put("/aluguel", {
+        id: id,
+        data: moment(dataRetirada),
+        dataDevolucao: moment(),
+        valorDiaria: valorDiaria,
+      })
+      .then((response) => {
+        setAttAluguel(response.data);
+        toggleLivroIsAlugado(livroId);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }
+
+  //============================================================
+
   //effect listagem
   useEffect(() => {
     getAluguels();
@@ -60,11 +91,12 @@ function App() {
     getLivros();
   }, []);
 
-  // const [aluguelId, setAluguelId] = useState("")
+  //============================================================
 
-  async function excluirAluguel() {
+  //EXCLUIR ALUGUEL
+  async function excluirAluguel(id) {
     await api
-      .delete(`/aluguel/:id`)
+      .delete(`/aluguel/${id}`)
       .then(() => {
         getAluguels();
         alert("aluguel excluido");
@@ -74,6 +106,7 @@ function App() {
       });
   }
 
+  //============================================================
   // puxar cliente listagem
   async function getClientes() {
     await api.get("/cliente").then((response) => {
@@ -81,6 +114,8 @@ function App() {
     });
   }
 
+  //============================================================
+  
   // puxar livro pra listagem
   async function getLivros() {
     await api.get("/livros").then((response) => {
@@ -88,6 +123,7 @@ function App() {
     });
   }
 
+  //============================================================
   return (
     <div className="container">
       <hr />
@@ -116,12 +152,12 @@ function App() {
             aria-label="Default select example"
           >
             {livros.map((l) => {
-              return <option value={l.id}>{l.nome}</option>;
+              return !l.isAlugado && <option value={l.id}>{l.nome}</option>;
             })}
           </Form.Select>
         </DropdownButton>
 
-        <Button variant="primary gap-2" size="sm" onClick={cadastrarAluguel}>
+        <Button variant="primary gap-2" size="sm" onClick={cadastrarAluguel} disabled={!clienteId || !livroId}>
           Cadastrar aluguel
         </Button>
       </div>
@@ -146,14 +182,26 @@ function App() {
                 <td>{a.Cliente.nome}</td>
                 <td>{moment(a.data).format("DD/MM/YYYY")}</td>
                 <td>
-                  {a.dataDevolucao &&
-                    moment(a.dataDevolucao).format("DD/MM/YYYY")}
+                  {a.dataDevolucao ?
+                    moment(a.dataDevolucao).format("DD/MM/YYYY")
+                  : <Button
+                    size="sm"
+                    onClick={() => {
+                      putAluguel(a.id, a.data, a.Livro.valorDiaria, a.livroId);
+                    }}
+                  >
+                    devolver
+                  </Button>}
                 </td>
                 <td>R$ {a.Livro.valorDiaria}</td>
                 <td>R$ {a.valorArrecadado}</td>
                 <td>
-                  
-                  <Button size="sm" onClick={() => excluirAluguel(a.aluguel.id)}>
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      excluirAluguel(a.id);
+                    }}
+                  >
                     x
                   </Button>
                 </td>
