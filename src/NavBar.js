@@ -38,8 +38,8 @@ function NavBar() {
               <NavDropdown.Item href="cliente">Cliente</NavDropdown.Item>
               <NavDropdown.Item href="aluguel">Aluguel</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="http://localhost:3000/aluguel/hst">Histórico</Nav.Link>
-            <Nav.Link href="http://localhost:3000/aluguel/faturamento">Faturamentos</Nav.Link>
+            <Nav.Link href="hst">Histórico</Nav.Link>
+            <Nav.Link href="faturamento">Faturamentos</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
