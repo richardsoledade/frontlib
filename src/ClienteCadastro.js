@@ -7,6 +7,9 @@ import {
 } from "react-bootstrap";
 import api from "./service/api";
 
+// Cadastro de cliente 
+//==========================================
+
 function ClienteCadastro() {
   const [clienteNome, setClienteNome] = useState([]);
   const [cpf, setCpf] = useState([]);
@@ -27,6 +30,7 @@ function ClienteCadastro() {
   }, []);
      
   const [clientes, setClientes] = useState([]);
+//==========================================
 
   // puxar livro pra listagem
   async function getClientes() {

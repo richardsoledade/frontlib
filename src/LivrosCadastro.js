@@ -10,7 +10,8 @@ import api from "./service/api";
 function LivrosCadastro() {
   const [livroNome, setLivroNome] = useState([]);
   const [vDiaria, setVDiaria] = useState([]);
-
+//==========================================
+//Cadastrar livro
   async function cadastrarLivro() {
     await api
       .post("/livros", {
@@ -28,6 +29,7 @@ function LivrosCadastro() {
      
   const [livros, setLivros] = useState([]);
 
+  //==========================================
   // puxar livro pra listagem
   async function getLivros() {
     await api

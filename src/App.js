@@ -27,7 +27,7 @@ function App() {
   const handleShow = () => setShow(true);
 
   //============================================================
-  // Cadastro via modal
+  // Mudança de condição Alugado
   async function toggleLivroIsAlugado(idLivro) {
     await api.put(`/livros/${idLivro}`).then((r) => {
       getAluguels();
@@ -62,7 +62,7 @@ function App() {
   }
 
   //============================================================
-  //Put function
+  //Função de devolução PUT
   const [attAluguel, setAttAluguel] = useState([]);
 
   async function putAluguel(id, dataRetirada, valorDiaria, livroId) {
@@ -116,7 +116,7 @@ function App() {
 
   //============================================================
   
-  // puxar livro pra listagem
+  // puxar livro listagem
   async function getLivros() {
     await api.get("/livros").then((response) => {
       setLivros(response.data);

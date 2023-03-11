@@ -17,12 +17,8 @@ function FaturamentoLivros() {
   const [dataIni, setDataIni] = useState('');
   const [dataFim, setDataFim] = useState('');
 
-  // Moment functions
-  // isAfter - verificação do moment para validar se uma data é maior que a outra fornecida.
-  // startOf('day') - seta a data para o inicio do dia.
-  // endOf('day') - seta a data para o fim do dia.
-  // isBetween - verificação do moment para um intervalo d
-
+  //==========================================
+  //Constante de filtragem de transformação de data via moment por intervalo, utilizando arredondamento de data por conta do fuso horário
   const listaFiltrada =
     aluguels.filter(
       (a) => moment(a.data).isAfter(moment(dataIni).startOf('day')) && !a.dataDevolucao || moment(a.dataDevolucao).isBetween(moment(dataIni).startOf('day'), moment(dataFim).endOf('day')));
@@ -33,6 +29,8 @@ function FaturamentoLivros() {
     getClientes();
   }, []);
 
+  //==========================================
+  // Puxar aluguel
   async function getAluguels() {
     await api
       .get("/aluguel")
@@ -43,8 +41,9 @@ function FaturamentoLivros() {
         alert(e);
       });
   }
+  //==========================================
 
-  // puxar livro pra listagem
+  // puxar cliente pra listagem
   async function getClientes() {
     await api
       .get("/cliente")
@@ -55,6 +54,8 @@ function FaturamentoLivros() {
         alert(e);
       });
   }
+  //==========================================
+  // Soma do faturamento total de intervalos
 
   function somaTotal(alugueis) {
     let total = 0

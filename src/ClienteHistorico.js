@@ -8,6 +8,7 @@ import {
   Table,
 } from "react-bootstrap";
 import api from "./service/api";
+//==========================================
 
 function ClienteHst() {
   const [clienteId, setClienteId] = useState();
@@ -18,8 +19,9 @@ function ClienteHst() {
   useEffect(() => {
     getClientes()
   }, []);
+//==========================================
 
- 
+//Seletor de histórico individual 
   async function getHst() {
     await api
       .get(`/aluguel/hst/${clienteId}`)
@@ -31,7 +33,8 @@ function ClienteHst() {
       });
   }
 
-  // puxar livro pra listagem
+  //==========================================
+  // puxar cliente pra listagem
   async function getClientes() {
     await api
     .get("/cliente")
